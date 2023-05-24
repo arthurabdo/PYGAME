@@ -3,23 +3,22 @@ import os
 import random 
 pygame.init()
 
-
-SCREEN_HEIGHT = 1000
-SCREEN_WIDTH = 2000
+#TELA
+SCREEN_HEIGHT = 700
+SCREEN_WIDTH = 1000
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+#IMAGENS
 CORRER = [pygame.image.load(os.path.join("images", "OtavioRun1.png")),
            pygame.image.load(os.path.join("images", "OtavioRun2.png"))]
-
 PULAR = pygame.image.load(os.path.join("images", "OtavioJump.png"))
-
-BAFOMETRO = [pygame.image.load(os.path.join("images", "Bafometro.png"))]
-               
+BAFOMETRO = [pygame.image.load(os.path.join("images", "Bafometro.png")),
+            pygame.image.load(os.path.join("images", "policia.png")),
+            pygame.image.load(os.path.join("images", "agua.png"))]              
 QUATA = pygame.image.load(os.path.join("images", "logoQuata.png"))
-
 BG = pygame.image.load(os.path.join("images", "Chao.png"))
 
-
+#CLASSES  
 class Otavio:
     X_POS = 200
     Y_POS = 270
@@ -96,6 +95,7 @@ class Quata:
 class Obstaculo:
     def __init__(self, image, type):
         self.image = image
+        print('estou printando', self.type, self.image)
         self.type = type
         self.rect = self.image[self.type].get_rect()
         self.rect.x = SCREEN_WIDTH
@@ -119,9 +119,9 @@ class Bafometro(Obstaculo):
 
 
 
-def main():
+def GAME():
     global game_speed, x_pos_bg, y_pos_bg, points, obstacles
-    run = True
+    
     clock = pygame.time.Clock()
     player = Otavio()
     cloud = Quata()
@@ -129,6 +129,7 @@ def main():
     x_pos_bg = 0
     y_pos_bg = 380
     points = 0
+    run = True
     font = pygame.font.Font('freesansbold.ttf', 20)
     obstacles = []
     death_count = 0
@@ -197,6 +198,7 @@ def menu(death_count):
 
         if death_count == 0:
             text = font.render("Precione qualquer tecla para começar", True, (0, 0, 0))
+            text = font.render("OTAVIO GAME", True, (0, 0, 0))
         elif death_count > 0:
             text = font.render("Precione qualquer tecla para recomeçar", True, (0, 0, 0))
             score = font.render("Sua pontuação: " + str(points), True, (0, 0, 0))
@@ -212,7 +214,7 @@ def menu(death_count):
             if event.type == pygame.QUIT:
                 run = False
             if event.type == pygame.KEYDOWN:
-                main()
+                GAME()
 
 
 menu(death_count=0)
