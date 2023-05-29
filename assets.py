@@ -22,7 +22,7 @@ def load_assets():
         filename = os.path.join(IMG_DIR, 'OtavioRun1{}.png'.format(i))
         img = pygame.image.load(filename).convert()
         run_anim.append(img)
-    assets[RUN_ANIM] = run_anim
+    assets[CORRER] = run_anim
 
     #carrega sons:
     pygame.mixer.music.load(os.path.join(SND_DIR))
