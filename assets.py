@@ -7,6 +7,7 @@ CORRER = ['OtavioRun1', 'OtavioRun2']
 PULAR = 'OtavioJump'
 BAFOMETRO = ['Bafometro', 'policia', 'agua']
 QUATA = 'logoQuata'
+FUNDO_SOUND = 'musicafundo_otavio'
 def load_assets():
     assets = {}
     assets[BG] = pygame.image.load(os.path.join("images", "Chao.png"))
@@ -26,3 +27,5 @@ def load_assets():
 
     #carrega sons:
     pygame.mixer.music.load(os.path.join(SND_DIR))
+    pygame.mixer.music.set_volume(0.4)
+    assets[FUNDO_SOUND] = pygame.mixer.Sound(os.path.join(SND_DIR, 'musicafundo_otavio.wav'))
