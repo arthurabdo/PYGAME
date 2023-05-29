@@ -29,3 +29,4 @@ def load_assets():
     pygame.mixer.music.load(os.path.join(SND_DIR))
     pygame.mixer.music.set_volume(0.4)
     assets[FUNDO_SOUND] = pygame.mixer.Sound(os.path.join(SND_DIR, 'musicafundo_otavio.wav'))
+    return assets
