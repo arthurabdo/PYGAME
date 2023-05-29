@@ -197,10 +197,10 @@ def menu(death_count):
         font = pygame.font.Font('freesansbold.ttf', 30)
 
         if death_count == 0:
-            text = font.render("Precione qualquer tecla para começar", True, (0, 0, 0))
+            text = font.render("Pressione qualquer tecla para começar", True, (0, 0, 0))
             text = font.render("OTAVIO GAME", True, (0, 0, 0))
         elif death_count > 0:
-            text = font.render("Precione qualquer tecla para recomeçar", True, (0, 0, 0))
+            text = font.render("Pressione qualquer tecla para recomeçar", True, (0, 0, 0))
             score = font.render("Sua pontuação: " + str(points), True, (0, 0, 0))
             scoreRect = score.get_rect()
             scoreRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
@@ -208,13 +208,12 @@ def menu(death_count):
         textRect = text.get_rect()
         textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         SCREEN.blit(text, textRect)
-        SCREEN.blit(CORRER[0], (SCREEN_WIDTH // 2 - 20, SCREEN_HEIGHT // 2 - 140))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
             if event.type == pygame.KEYDOWN:
                 GAME()
-
+    pygame.quit()
 
 menu(death_count=0)
