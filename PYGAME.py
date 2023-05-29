@@ -214,6 +214,12 @@ def menu(death_count):
                 run = False
             if event.type == pygame.KEYDOWN:
                 GAME()
+
+    #guardando score
+    with open('score.json', 'a') as arquivo_json:
+        texto = arquivo_json.write(str(points))
+
+
     pygame.quit()
 
 menu(death_count=0)
