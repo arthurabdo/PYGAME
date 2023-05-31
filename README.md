@@ -11,4 +11,4 @@ O arquivo que deve ser executado para iniciar o jogo é o PYGAME.
 
 Observação: Falamos com a Barbara sobre um problema que tivemos no começo do jogo com os commits e, por isso, a Giulia e o Rafael não tem muitos commits. Apenas na última semana conseguimos resolver esse problema, dessa forma, grande parte do jogo foi feita no computador do Arthur - criador do repositório.
 
-Endereço para o vídeo:
+Endereço para o vídeo: https://youtu.be/54ugmiCp1oE
