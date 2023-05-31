@@ -1,0 +1,5 @@
+BG = 'Chao'
+CORRER = 'OtavioRun'
+PULAR = 'OtavioJump'
+BAFOMETRO = 'Obstaculos'
+QUATA = 'logoQuata'

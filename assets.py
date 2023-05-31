@@ -1,13 +1,13 @@
 import pygame
 import os
-from config import IMG_DIR, SND_DIR, FNT_DIR, SCREEN_WIDTH, SCREEN_HEIGHT
+from config import *
 
-BG = 'Chao'
-CORRER = ['OtavioRun1', 'OtavioRun2']
-PULAR = 'OtavioJump'
-BAFOMETRO = ['Bafometro', 'policia', 'agua']
-QUATA = 'logoQuata'
-FUNDO_SOUND = 'musicafundo_otavio'
+# BG = 'Chao'
+# CORRER = 'OtavioRun'
+# PULAR = 'OtavioJump'
+# BAFOMETRO = 'Obstaculos'
+# QUATA = 'logoQuata'
+
 def load_assets():
     assets = {}
     assets[BG] = pygame.image.load(os.path.join("images", "Chao.png"))
@@ -19,14 +19,4 @@ def load_assets():
             pygame.image.load(os.path.join("images", "agua.png"))]
     assets[QUATA] = pygame.image.load(os.path.join("images", "logoQuata.png"))
     run_anim = []
-    for i in range(2):
-        filename = os.path.join(IMG_DIR, 'OtavioRun1{}.png'.format(i))
-        img = pygame.image.load(filename).convert()
-        run_anim.append(img)
-    assets[CORRER] = run_anim
-
-    #carrega sons:
-    pygame.mixer.music.load(os.path.join(SND_DIR))
-    pygame.mixer.music.set_volume(0.4)
-    assets[FUNDO_SOUND] = pygame.mixer.Sound(os.path.join(SND_DIR, 'musicafundo_otavio.wav'))
     return assets

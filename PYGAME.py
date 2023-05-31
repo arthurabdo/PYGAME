@@ -1,27 +1,16 @@
+#importa funções e bibliotecas.
 import pygame  
 import os
 import random 
 pygame.init()
+from assets import *
+from config import *
 
-#TELA
+#Cria a tela e sua dimensões
 SCREEN_HEIGHT = 700
 SCREEN_WIDTH = 1000
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-#IMAGENS:
-#Lista com as duas imagens do Otavio correndo:
-CORRER = [pygame.image.load(os.path.join("images", "OtavioRun1.png")),
-           pygame.image.load(os.path.join("images", "OtavioRun2.png"))]
-#imagem pulando
-PULAR = pygame.image.load(os.path.join("images", "OtavioJump.png"))
-#imagens do bafometro, agua e policia usados como obstáculos
-BAFOMETRO = [pygame.image.load(os.path.join("images", "Bafometro.png")),
-            pygame.image.load(os.path.join("images", "policia.png")),
-            pygame.image.load(os.path.join("images", "agua.png"))]
-#logo do quata que é usado como nuvem:              
-QUATA = pygame.image.load(os.path.join("images", "logoQuata.png"))
-#Imagem de fundo
-BG = pygame.image.load(os.path.join("images", "Chao.png"))
 
 #Upload da música usada como fundo: 
 pygame.mixer.music.load('snd/Musica_fundo_otavio.wav')
@@ -31,6 +20,8 @@ pygame.mixer.music.set_volume(0.4)
 font_g = pygame.font.SysFont(None, 48)
 font_m = pygame.font.SysFont(None, 30)
 
+#Cria variável dos assets:
+assets = load_assets()
 
 #CLASSES:
 # Classe do Oatvio (personagem principal):  
@@ -43,8 +34,8 @@ class Otavio:
 
     #Cria os selfs
     def __init__(self):
-        self.corre_img = CORRER
-        self.pulo_img = PULAR
+        self.corre_img = assets[CORRER]
+        self.pulo_img = assets[PULAR]
 
         self.otavio_run = True
         self.otavio_jump = False
@@ -92,54 +83,54 @@ class Otavio:
     def draw(self, SCREEN):
         SCREEN.blit(self.image, (self.otavio_rect.x, self.otavio_rect.y))
 
-
+#Cria classe do Quata
 class Quata:
+    #Cria selfs:
     def __init__(self):
         self.x = SCREEN_WIDTH + random.randint(800, 1000)
         self.y = random.randint(50, 100)
-        self.image = QUATA
+        self.image = assets[QUATA]
         self.width = self.image.get_width()
-
+    #Update do quata:
     def update(self):
         self.x -= game_speed
         if self.x < -self.width:
             self.x = SCREEN_WIDTH + random.randint(2500, 3000)
             self.y = random.randint(50, 100)
-
+    #Desenha a imagem na tela:
     def draw(self, SCREEN):
         SCREEN.blit(self.image, (self.x, self.y))
 
-
+#Cria a classe dos obstáculos:
 class Obstaculo:
+    #Cria os selfs:
     def __init__(self, image, type):
         self.image = image
         print('estou printando', self.type, self.image)
         self.type = type
         self.rect = self.image[self.type].get_rect()
         self.rect.x = SCREEN_WIDTH
-
+    #Update nos obstáculos
     def update(self):
         self.rect.x -= game_speed
         if self.rect.x < -self.rect.width:
             obstacles.pop()
-
+    #Desenha imagens na tela:
     def draw(self, SCREEN):
         SCREEN.blit(self.image[self.type], self.rect)
 
-
+#Cria a classe do Bafometro, que chama a classe obstáculo como argumento:
 class Bafometro(Obstaculo):
+    #Cria os selfs:
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
         self.rect.y = 325
 
-
-
-
-
+#Cria a função principal do jogo:
 def main():
-    global game_speed, x_pos_bg, y_pos_bg, points, obstacles
-      
+    #Posiciona e cria componentes do jogo:
+    global game_speed, x_pos_bg, y_pos_bg, points, obstacles  
     clock = pygame.time.Clock()
     player = Otavio()
     cloud = Quata()
@@ -151,7 +142,8 @@ def main():
     font = pygame.font.Font('freesansbold.ttf', 20)
     obstacles = []
     death_count = 0
-
+    
+    #Função que contabiliza os pontos
     def score():
         global points, game_speed
         points += 1
@@ -163,32 +155,41 @@ def main():
         textRect.center = (9000, 30)
         SCREEN.blit(text, textRect)
 
+    #Preenche a tela com a imagem de fundo:
     def background():
         global x_pos_bg, y_pos_bg
-        image_width = BG.get_width()
-        SCREEN.blit(BG, (x_pos_bg, y_pos_bg))
-        SCREEN.blit(BG, (image_width + x_pos_bg, y_pos_bg))
+        image_width = assets[BG].get_width()
+        SCREEN.blit(assets[BG], (x_pos_bg, y_pos_bg))
+        SCREEN.blit(assets[BG], (image_width + x_pos_bg, y_pos_bg))
         if x_pos_bg <= -image_width:
-            SCREEN.blit(BG, (image_width + x_pos_bg, y_pos_bg))
+            SCREEN.blit(assets[BG], (image_width + x_pos_bg, y_pos_bg))
             x_pos_bg = 0
         x_pos_bg -= game_speed
 
+#Inicializa o som de fundo no jogo enquanto o jogador está vivo:
     pygame.mixer.music.play(loops=-1)
+
+    #Inicia o loop do jogo:
     while run:
+        #Fecha o jogo se o jogador fechar a tela
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
 
+        #Pinta a tela de branco e cria o input do jogador: 
         SCREEN.fill((255, 255, 255))
         userInput = pygame.key.get_pressed()
 
+        #desenha os jogadores na tela e dá update de acordo com o input:
         player.draw(SCREEN)
         player.update(userInput)
 
+        #Sorteia o obstáculo:
         if len(obstacles) == 0:
             if random.randint(0, 2) == 0:
-                obstacles.append(Bafometro(BAFOMETRO))
-      
+                obstacles.append(Bafometro(assets[BAFOMETRO]))
+
+        #Desenha o obstáculo na tela e aumenta a deathcount caso haja colisão do jogador com obstáculo
         for obstacle in obstacles:
             obstacle.draw(SCREEN)
             obstacle.update()
@@ -197,13 +198,11 @@ def main():
                 death_count += 1
                 menu(death_count)
 
+        #Chama funções:
         background()
-
         cloud.draw(SCREEN)
         cloud.update()
-
         score()
-
         clock.tick(30)
         pygame.display.update()
 
